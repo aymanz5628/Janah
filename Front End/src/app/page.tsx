@@ -8,13 +8,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-const STRAPI_URL = 'https://active-success-312253e677.strapiapp.com';
+const STRAPI_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
 
 const FALLBACK_IMAGES = [
-    "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=600",
-    "https://images.unsplash.com/photo-1493836512294-502baa1986e2?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600", // airplane
+    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&q=80&w=800", // airport
+    "https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&q=80&w=800", // travel
+    "https://images.unsplash.com/photo-1507812984078-917a274065be?auto=format&fit=crop&q=80&w=800", // flight
 ];
 
 const getFallbackImage = (index: number) => FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
@@ -40,18 +40,72 @@ const getCategoryInfo = (catField: any) => {
     return { name: 'عام', slug: 'general' };
 };
 
+// Aviation-themed placeholder content
+const MOCK_ARTICLES = [
+    {
+        id: 'a1',
+        slug: 'aviation-future',
+        title: 'مستقبل الطيران المدني',
+        excerpt: 'استكشاف أحدث التقنيات في صناعة الطيران العالمية',
+        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200',
+        category: { name: 'الطيران', slug: 'aviation' },
+        date: '2026/01/09',
+        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+    },
+    {
+        id: 'a2',
+        slug: 'best-destinations',
+        title: 'أفضل وجهات السفر لعام 2026',
+        excerpt: 'اكتشف أجمل الوجهات السياحية في العالم',
+        image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1200',
+        category: { name: 'السفر', slug: 'travel' },
+        date: '2026/01/08',
+        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+    },
+    {
+        id: 'a3',
+        slug: 'airport-guide',
+        title: 'دليل المسافر في المطارات الدولية',
+        excerpt: 'نصائح وإرشادات للمسافرين',
+        image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1200',
+        category: { name: 'السفر', slug: 'travel' },
+        date: '2026/01/07',
+        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+    },
+    {
+        id: 'a4',
+        slug: 'pilots-life',
+        title: 'حياة الطيارين: خلف الكواليس',
+        excerpt: 'تعرف على يوم عادي في حياة طيار محترف',
+        image: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=1200',
+        category: { name: 'الطيران', slug: 'aviation' },
+        date: '2026/01/06',
+        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+    },
+    {
+        id: 'a5',
+        slug: 'luxury-travel',
+        title: 'السفر الفاخر: تجارب لا تُنسى',
+        excerpt: 'أفخم تجارب السفر حول العالم',
+        image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1200',
+        category: { name: 'السفر', slug: 'travel' },
+        date: '2026/01/05',
+        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+    },
+];
+
 const MOCK_PROGRAMS = [
-    { id: 'p1', title: 'السوكياليزم', link: '#', image: getFallbackImage(15) },
-    { id: 'p2', title: 'وعي', link: '#', image: getFallbackImage(16) },
-    { id: 'p3', title: 'ثمانية أسئلة', link: '#', image: getFallbackImage(17) },
-    { id: 'p4', title: 'فنجان', link: '#', image: getFallbackImage(18) },
+    { id: 'p1', title: 'عالم الطيران', link: '#', image: 'https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600' },
+    { id: 'p2', title: 'رحلات حول العالم', link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
+    { id: 'p3', title: 'أسرار المطارات', link: '#', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?q=80&w=600' },
+    { id: 'p4', title: 'مغامرات السفر', link: '#', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600' },
 ];
 
 const MOCK_DOCS = [
-    { id: 'd1', title: 'أسرار الكون', link: '#', image: getFallbackImage(25) },
-    { id: 'd2', title: 'الحياة البرية', link: '#', image: getFallbackImage(26) },
-    { id: 'd3', title: 'تاريخنا', link: '#', image: getFallbackImage(27) },
-    { id: 'd4', title: 'علوم المستقبل', link: '#', image: getFallbackImage(28) },
+    { id: 'd1', title: 'تاريخ الطيران', link: '#', image: 'https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=600' },
+    { id: 'd2', title: 'عجائب الدنيا السبع', link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
+    { id: 'd3', title: 'أسرار الطائرات', link: '#', image: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600' },
+    { id: 'd4', title: 'وجهات مجهولة', link: '#', image: 'https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=600' },
 ];
 
 export default function Home() {
@@ -67,22 +121,29 @@ export default function Home() {
                 if (articlesRes.ok) {
                     const data = await articlesRes.json();
                     const rawArticles = data.data || [];
-                    const formattedArticles = rawArticles.map((article: any, index: number) => {
-                        const attr = article.attributes || article;
-                        const cat = getCategoryInfo(attr.category);
-                        const imageUrl = getStrapiMedia(getImageUrl(attr.image)) || getFallbackImage(index);
-                        return {
-                            id: article.id,
-                            slug: attr.slug || 'article-' + article.id,
-                            title: attr.title || 'بدون عنوان',
-                            excerpt: attr.description || '',
-                            image: imageUrl,
-                            category: cat,
-                            date: attr.publishedAt ? new Date(attr.publishedAt).toLocaleDateString('ar-SA') : 'تاريخ غير متوفر',
-                            author: { name: 'محرر', avatar: 'https://ui-avatars.com/api/?name=User' }
-                        };
-                    });
-                    setArticles(formattedArticles);
+                    if (rawArticles.length > 0) {
+                        const formattedArticles = rawArticles.map((article: any, index: number) => {
+                            const attr = article.attributes || article;
+                            const cat = getCategoryInfo(attr.category);
+                            const imageUrl = getStrapiMedia(getImageUrl(attr.image)) || getFallbackImage(index);
+                            return {
+                                id: article.id,
+                                slug: attr.slug || 'article-' + article.id,
+                                title: attr.title || 'بدون عنوان',
+                                excerpt: attr.description || '',
+                                image: imageUrl,
+                                category: cat,
+                                date: attr.publishedAt ? new Date(attr.publishedAt).toLocaleDateString('ar-SA') : 'تاريخ غير متوفر',
+                                author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+                            };
+                        });
+                        setArticles(formattedArticles);
+                    } else {
+                        // Use mock articles if no data from backend
+                        setArticles(MOCK_ARTICLES);
+                    }
+                } else {
+                    setArticles(MOCK_ARTICLES);
                 }
 
                 const programsRes = await fetch(`${STRAPI_URL}/api/programs?populate=*&pagination[limit]=4&sort=publishedAt:desc`);
@@ -114,6 +175,8 @@ export default function Home() {
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
+                // Use mock articles on error
+                setArticles(MOCK_ARTICLES);
             } finally {
                 setLoading(false);
             }
@@ -121,41 +184,16 @@ export default function Home() {
         fetchData();
     }, []);
 
-    const fillWithReal = (target: any[], sourceDetails: any[], count: number, suffix: string) => {
-        let filled = [...target];
-        if (filled.length >= count) return filled.slice(0, count);
-        if (sourceDetails.length === 0) return filled;
-        let i = 0;
-        while (filled.length < count) {
-            const original = sourceDetails[i % sourceDetails.length];
-            filled.push({ ...original, id: `${original.id}-${suffix}-${filled.length}` });
-            i++;
-        }
-        return filled;
-    };
-
-    const fillMock = (current: any[], count: number, offset: number) => {
-        if (current.length >= count) return current;
-        const needed = count - current.length;
-        return [...current, ...Array(needed).fill(null).map((_, i) => ({
-            id: `mock-feed-${offset + i}`, title: 'عنوان تجريبي للمقال', excerpt: 'نبذة مختصرة عن المقال...',
-            slug: 'sample-article', image: getFallbackImage(offset + i), category: { name: 'تصنيف', slug: 'category' },
-            author: { name: 'محرر', avatar: '' }, date: '2025/01/01'
-        }))];
-    };
-
     const heroArticles = articles.slice(0, 1);
-    let latestTopics = fillWithReal(articles.slice(1, 5), articles, 4, 'latest');
-    let mostViewed = fillWithReal(articles.slice(5, 9), [...articles].reverse(), 4, 'popular');
-    const finalLatest = fillMock(latestTopics, 4, 30);
-    const finalMostViewed = fillMock(mostViewed, 4, 40);
+    const latestTopics = articles.slice(1, 5).length >= 4 ? articles.slice(1, 5) : articles.slice(0, 4);
+    const mostViewed = articles.slice(0, 4);
 
     if (loading) {
         return (
             <main className={styles.main}>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
                     <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '48px', marginBottom: '20px' }}>⏳</div>
+                        <div style={{ fontSize: '48px', marginBottom: '20px' }}>✈️</div>
                         <p style={{ fontSize: '18px', color: '#666' }}>جاري تحميل المحتوى...</p>
                     </div>
                 </div>
@@ -170,7 +208,7 @@ export default function Home() {
                 <div className="container">
                     <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>أحدث المواضيع</h2></div>
                     <div className={styles.parallaxGrid}>
-                        {finalLatest.map((article: any) => (<div key={article.id} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
+                        {latestTopics.map((article: any) => (<div key={article.id} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
                     </div>
                 </div>
             </section>
@@ -178,7 +216,7 @@ export default function Home() {
                 <div className="container">
                     <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>الأكثر مشاهدة</h2></div>
                     <div className={styles.parallaxGrid}>
-                        {finalMostViewed.map((article: any) => (<div key={article.id} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
+                        {mostViewed.map((article: any) => (<div key={article.id + '-viewed'} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
                     </div>
                 </div>
             </section>
