@@ -324,3 +324,49 @@
 .mobileActions {
     padding: 0 20px;
 }
+
+/* LTR Header adjustments */
+:global(html[dir="ltr"]) .container {
+    flex-direction: row;
+}
+
+:global(html[dir="ltr"]) .logo {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+:global(html[dir="ltr"]) .nav {
+    flex-direction: row;
+}
+
+:global(html[dir="ltr"]) .searchForm {
+    flex-direction: row;
+}
+
+:global(html[dir="ltr"]) .mobileMenu {
+    right: auto;
+    left: 0;
+    transform: translateX(-100%);
+}
+
+:global(html[dir="ltr"]) .mobileMenu.open {
+    transform: translateX(0);
+}
+
+/* RTL Header adjustments */
+:global(html[dir="rtl"]) .container {
+    flex-direction: row-reverse;
+}
+
+:global(html[dir="rtl"]) .logo {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+:global(html[dir="rtl"]) .nav {
+    flex-direction: row-reverse;
+}
+
+:global(html[dir="rtl"]) .searchForm {
+    flex-direction: row-reverse;
+}
