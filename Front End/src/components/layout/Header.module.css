@@ -17,16 +17,16 @@
     padding: 0 var(--space-6);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-6);
 }
 
 /* Logo */
 .logo {
-    font-size: 30px;
-    /* Increased from 26px */
+    font-size: 28px;
     font-weight: 800;
     letter-spacing: -0.04em;
     color: var(--text-primary);
+    white-space: nowrap;
 }
 
 .logo span {
@@ -40,17 +40,19 @@
 .nav {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-5);
+    flex: 1;
+    justify-content: center;
 }
 
 .navLink {
     position: relative;
-    font-size: 18px;
-    /* Increased from 16px */
+    font-size: 16px;
     font-weight: 500;
     color: var(--text-secondary);
     padding: var(--space-2) 0;
     transition: color 150ms ease;
+    white-space: nowrap;
 }
 
 .navLink::after {
@@ -92,7 +94,7 @@
     display: flex;
     align-items: center;
     background: var(--surface);
-    padding: var(--space-2) 16px;
+    padding: var(--space-2) 14px;
     border-radius: var(--radius-full);
     gap: var(--space-2);
 }
@@ -101,17 +103,16 @@
     border: none;
     background: transparent;
     outline: none;
-    font-size: 16px;
-    /* Increased from 15px */
+    font-size: 14px;
     color: var(--text-primary);
-    width: 140px;
+    width: 120px;
 }
 
 .searchInput::placeholder {
     color: var(--text-tertiary);
 }
 
-.searchBtn {
+.searchButton {
     padding: 0;
     background: transparent;
     border: none;
@@ -121,12 +122,34 @@
     transition: color 150ms ease;
 }
 
-.searchBtn:hover {
+.searchButton:hover {
     color: var(--sky-blue);
 }
 
-/* Mobile Menu Button - Hidden Only */
-.mobileMenuBtn {
+/* Language Toggle */
+.langToggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--sky-blue);
+    border-radius: 20px;
+    color: var(--foreground);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.langToggle:hover {
+    background: var(--sky-blue);
+    color: white;
+}
+
+/* Mobile Menu Button */
+.mobileMenuButton {
     display: none;
     padding: var(--space-2);
     background: transparent;
@@ -135,43 +158,16 @@
     color: var(--text-primary);
 }
 
-/* Mobile Overlay */
-.mobileOverlay {
-    display: none;
-    /* Always hidden now */
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 300ms ease;
-}
-
-.mobileOverlay.open {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Mobile Menu Drawer */
+/* Mobile Menu */
 .mobileMenu {
-    display: none;
-    /* Always hidden now */
     position: fixed;
-    top: 0;
+    top: var(--header-height);
+    left: 0;
     right: 0;
-    width: 280px;
-    height: 100vh;
     background: var(--snow);
     z-index: 999;
-    padding: var(--space-8) var(--space-5);
-    transform: translateX(100%);
-    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
-}
-
-.mobileMenu.open {
-    transform: translateX(0);
+    padding: var(--space-6);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
 .mobileNav {
@@ -182,7 +178,7 @@
 }
 
 .mobileNavLink {
-    font-size: var(--text-lg);
+    font-size: 18px;
     font-weight: 600;
     color: var(--text-secondary);
     padding: var(--space-3) 0;
@@ -193,6 +189,27 @@
 .mobileNavLink:hover,
 .mobileNavLink.active {
     color: var(--sky-blue);
+}
+
+.mobileLangToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--sky-blue);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+}
+
+.mobileActions {
+    margin-bottom: var(--space-4);
 }
 
 .mobileSearchForm {
@@ -209,7 +226,7 @@
     border: none;
     background: transparent;
     outline: none;
-    font-size: var(--text-base);
+    font-size: 16px;
     color: var(--text-primary);
 }
 
@@ -217,7 +234,7 @@
     color: var(--text-tertiary);
 }
 
-.mobileSearchBtn {
+.mobileSearchButton {
     padding: var(--space-2);
     background: linear-gradient(135deg, var(--sky-blue), var(--ocean));
     border: none;
@@ -227,146 +244,27 @@
     display: flex;
 }
 
-/* Mobile/Tablet Adjustments for Header Layout */
-@media (max-width: 1024px) {
-    .container {
-        padding: 0 var(--space-4);
-    }
-
+/* Tablet/Mobile Responsive */
+@media (max-width: 900px) {
     .nav {
-        gap: var(--space-2);
-        /* Tighter gap */
+        display: none;
     }
-
-    .navLink {
-        font-size: 14px;
-    }
-
+    
     .searchForm {
-        padding: var(--space-2);
-        gap: var(--space-1);
+        display: none;
     }
-
-    .searchInput {
-        width: 80px;
-        font-size: 14px;
-    }
-
-    .logo {
-        font-size: 19px;
+    
+    .mobileMenuButton {
+        display: flex;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 8px;
-        /* Reduce container padding to maximize space */
+        padding: 0 var(--space-4);
     }
-
-    .searchInput {
-        width: 50px;
-        /* Reduced further to give space to text */
-    }
-
-    .nav {
-        gap: 6px;
-        /* Very tight gap */
-    }
-
-    .navLink {
-        font-size: 12px;
-        padding: 4px 0;
-    }
-
+    
     .logo {
-        font-size: 16px;
-        margin-left: 4px;
+        font-size: 22px;
     }
-}
-/* Language Toggle */
-.langToggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    background: transparent;
-    border: 1px solid var(--sky-blue);
-    border-radius: 20px;
-    color: var(--foreground);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.langToggle:hover {
-    background: var(--sky-blue);
-    color: white;
-}
-
-.mobileLangToggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 12px 20px;
-    background: var(--sky-blue);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 16px;
-}
-
-.mobileActions {
-    padding: 0 20px;
-}
-
-/* LTR Header adjustments */
-:global(html[dir="ltr"]) .container {
-    flex-direction: row;
-}
-
-:global(html[dir="ltr"]) .logo {
-    margin-right: auto;
-    margin-left: 0;
-}
-
-:global(html[dir="ltr"]) .nav {
-    flex-direction: row;
-}
-
-:global(html[dir="ltr"]) .searchForm {
-    flex-direction: row;
-}
-
-:global(html[dir="ltr"]) .mobileMenu {
-    right: auto;
-    left: 0;
-    transform: translateX(-100%);
-}
-
-:global(html[dir="ltr"]) .mobileMenu.open {
-    transform: translateX(0);
-}
-
-/* RTL Header adjustments */
-:global(html[dir="rtl"]) .container {
-    flex-direction: row-reverse;
-}
-
-:global(html[dir="rtl"]) .logo {
-    margin-left: auto;
-    margin-right: 0;
-}
-
-:global(html[dir="rtl"]) .nav {
-    flex-direction: row-reverse;
-}
-
-:global(html[dir="rtl"]) .searchForm {
-    flex-direction: row-reverse;
 }
