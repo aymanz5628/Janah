@@ -7,14 +7,15 @@ import GallerySection from '@/components/home/GallerySection';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
 
 const FALLBACK_IMAGES = [
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600", // airplane
-    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&q=80&w=800", // airport
-    "https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&q=80&w=800", // travel
-    "https://images.unsplash.com/photo-1507812984078-917a274065be?auto=format&fit=crop&q=80&w=800", // flight
+    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600",
+    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1488085061387-422e29b40080?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1507812984078-917a274065be?auto=format&fit=crop&q=80&w=800",
 ];
 
 const getFallbackImage = (index: number) => FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
@@ -33,86 +34,65 @@ const getStrapiMedia = (url: string | null) => {
     return `${STRAPI_URL}${url}`;
 };
 
-const getCategoryInfo = (catField: any) => {
-    if (!catField) return { name: 'عام', slug: 'general' };
-    if (catField.name && catField.slug) return { name: catField.name, slug: catField.slug };
-    if (catField.data?.attributes) return { name: catField.data.attributes.name, slug: catField.data.attributes.slug };
-    return { name: 'عام', slug: 'general' };
-};
-
-// Aviation-themed placeholder content
-const MOCK_ARTICLES = [
-    {
-        id: 'a1',
-        slug: 'aviation-future',
-        title: 'مستقبل الطيران المدني',
-        excerpt: 'استكشاف أحدث التقنيات في صناعة الطيران العالمية',
-        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200',
-        category: { name: 'الطيران', slug: 'aviation' },
-        date: '2026/01/09',
-        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
-    },
-    {
-        id: 'a2',
-        slug: 'best-destinations',
-        title: 'أفضل وجهات السفر لعام 2026',
-        excerpt: 'اكتشف أجمل الوجهات السياحية في العالم',
-        image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1200',
-        category: { name: 'السفر', slug: 'travel' },
-        date: '2026/01/08',
-        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
-    },
-    {
-        id: 'a3',
-        slug: 'airport-guide',
-        title: 'دليل المسافر في المطارات الدولية',
-        excerpt: 'نصائح وإرشادات للمسافرين',
-        image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1200',
-        category: { name: 'السفر', slug: 'travel' },
-        date: '2026/01/07',
-        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
-    },
-    {
-        id: 'a4',
-        slug: 'pilots-life',
-        title: 'حياة الطيارين: خلف الكواليس',
-        excerpt: 'تعرف على يوم عادي في حياة طيار محترف',
-        image: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=1200',
-        category: { name: 'الطيران', slug: 'aviation' },
-        date: '2026/01/06',
-        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
-    },
-    {
-        id: 'a5',
-        slug: 'luxury-travel',
-        title: 'السفر الفاخر: تجارب لا تُنسى',
-        excerpt: 'أفخم تجارب السفر حول العالم',
-        image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1200',
-        category: { name: 'السفر', slug: 'travel' },
-        date: '2026/01/05',
-        author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
-    },
-];
-
-const MOCK_PROGRAMS = [
-    { id: 'p1', title: 'عالم الطيران', link: '#', image: 'https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600' },
-    { id: 'p2', title: 'رحلات حول العالم', link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
-    { id: 'p3', title: 'أسرار المطارات', link: '#', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?q=80&w=600' },
-    { id: 'p4', title: 'مغامرات السفر', link: '#', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600' },
-];
-
-const MOCK_DOCS = [
-    { id: 'd1', title: 'تاريخ الطيران', link: '#', image: 'https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=600' },
-    { id: 'd2', title: 'عجائب الدنيا السبع', link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
-    { id: 'd3', title: 'أسرار الطائرات', link: '#', image: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600' },
-    { id: 'd4', title: 'وجهات مجهولة', link: '#', image: 'https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=600' },
-];
-
 export default function Home() {
+    const { t, language } = useLanguage();
     const [loading, setLoading] = useState(true);
     const [articles, setArticles] = useState<any[]>([]);
-    const [programs, setPrograms] = useState<any[]>(MOCK_PROGRAMS);
-    const [documentaries, setDocumentaries] = useState<any[]>(MOCK_DOCS);
+    const [programs, setPrograms] = useState<any[]>([]);
+    const [documentaries, setDocumentaries] = useState<any[]>([]);
+
+    // Mock articles with translations
+    const getMockArticles = () => [
+        {
+            id: 'a1', slug: 'aviation-future',
+            title: t('article.1.title'), excerpt: t('article.1.excerpt'),
+            image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1200',
+            category: { name: t('category.aviation'), slug: 'aviation' },
+            date: '2026/01/09', author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
+        },
+        {
+            id: 'a2', slug: 'best-destinations',
+            title: t('article.2.title'), excerpt: t('article.2.excerpt'),
+            image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=1200',
+            category: { name: t('category.travel'), slug: 'travel' },
+            date: '2026/01/08', author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
+        },
+        {
+            id: 'a3', slug: 'airport-guide',
+            title: t('article.3.title'), excerpt: t('article.3.excerpt'),
+            image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=1200',
+            category: { name: t('category.travel'), slug: 'travel' },
+            date: '2026/01/07', author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
+        },
+        {
+            id: 'a4', slug: 'pilots-life',
+            title: t('article.4.title'), excerpt: t('article.4.excerpt'),
+            image: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=1200',
+            category: { name: t('category.aviation'), slug: 'aviation' },
+            date: '2026/01/06', author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
+        },
+        {
+            id: 'a5', slug: 'luxury-travel',
+            title: t('article.5.title'), excerpt: t('article.5.excerpt'),
+            image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1200',
+            category: { name: t('category.travel'), slug: 'travel' },
+            date: '2026/01/05', author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
+        },
+    ];
+
+    const getMockPrograms = () => [
+        { id: 'p1', title: t('program.1'), link: '#', image: 'https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600' },
+        { id: 'p2', title: t('program.2'), link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
+        { id: 'p3', title: t('program.3'), link: '#', image: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?q=80&w=600' },
+        { id: 'p4', title: t('program.4'), link: '#', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600' },
+    ];
+
+    const getMockDocs = () => [
+        { id: 'd1', title: t('doc.1'), link: '#', image: 'https://images.unsplash.com/photo-1474302770737-173ee21bab63?q=80&w=600' },
+        { id: 'd2', title: t('doc.2'), link: '#', image: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600' },
+        { id: 'd3', title: t('doc.3'), link: '#', image: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600' },
+        { id: 'd4', title: t('doc.4'), link: '#', image: 'https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=600' },
+    ];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -124,65 +104,39 @@ export default function Home() {
                     if (rawArticles.length > 0) {
                         const formattedArticles = rawArticles.map((article: any, index: number) => {
                             const attr = article.attributes || article;
-                            const cat = getCategoryInfo(attr.category);
+                            const cat = attr.category?.data?.attributes || attr.category || { name: t('category.general'), slug: 'general' };
                             const imageUrl = getStrapiMedia(getImageUrl(attr.image)) || getFallbackImage(index);
                             return {
                                 id: article.id,
                                 slug: attr.slug || 'article-' + article.id,
-                                title: attr.title || 'بدون عنوان',
+                                title: attr.title || 'Untitled',
                                 excerpt: attr.description || '',
                                 image: imageUrl,
-                                category: cat,
-                                date: attr.publishedAt ? new Date(attr.publishedAt).toLocaleDateString('ar-SA') : 'تاريخ غير متوفر',
-                                author: { name: 'محرر جناح', avatar: 'https://ui-avatars.com/api/?name=J' }
+                                category: { name: cat.name || t('category.general'), slug: cat.slug || 'general' },
+                                date: attr.publishedAt ? new Date(attr.publishedAt).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US') : '',
+                                author: { name: t('author.editor'), avatar: 'https://ui-avatars.com/api/?name=J' }
                             };
                         });
                         setArticles(formattedArticles);
                     } else {
-                        // Use mock articles if no data from backend
-                        setArticles(MOCK_ARTICLES);
+                        setArticles(getMockArticles());
                     }
                 } else {
-                    setArticles(MOCK_ARTICLES);
+                    setArticles(getMockArticles());
                 }
-
-                const programsRes = await fetch(`${STRAPI_URL}/api/programs?populate=*&pagination[limit]=4&sort=publishedAt:desc`);
-                if (programsRes.ok) {
-                    const data = await programsRes.json();
-                    const rawPrograms = data.data || [];
-                    if (rawPrograms.length > 0) {
-                        const formattedPrograms = rawPrograms.map((item: any, idx: number) => {
-                            const attr = item.attributes || item;
-                            const imageUrl = getStrapiMedia(getImageUrl(attr.image)) || getFallbackImage(idx + 10);
-                            return { id: item.id, title: attr.title || 'بدون عنوان', image: imageUrl, link: `/articles/${attr.slug || 'program-' + item.id}` };
-                        });
-                        setPrograms(formattedPrograms.length >= 4 ? formattedPrograms : [...formattedPrograms, ...MOCK_PROGRAMS.slice(formattedPrograms.length)]);
-                    }
-                }
-
-                const docsRes = await fetch(`${STRAPI_URL}/api/documentaries?populate=*&pagination[limit]=4&sort=publishedAt:desc`);
-                if (docsRes.ok) {
-                    const data = await docsRes.json();
-                    const rawDocs = data.data || [];
-                    if (rawDocs.length > 0) {
-                        const formattedDocs = rawDocs.map((item: any, idx: number) => {
-                            const attr = item.attributes || item;
-                            const imageUrl = getStrapiMedia(getImageUrl(attr.image)) || getFallbackImage(idx + 20);
-                            return { id: item.id, title: attr.title || 'بدون عنوان', image: imageUrl, link: `/articles/${attr.slug || 'doc-' + item.id}` };
-                        });
-                        setDocumentaries(formattedDocs.length >= 4 ? formattedDocs : [...formattedDocs, ...MOCK_DOCS.slice(formattedDocs.length)]);
-                    }
-                }
+                setPrograms(getMockPrograms());
+                setDocumentaries(getMockDocs());
             } catch (error) {
                 console.error('Error fetching data:', error);
-                // Use mock articles on error
-                setArticles(MOCK_ARTICLES);
+                setArticles(getMockArticles());
+                setPrograms(getMockPrograms());
+                setDocumentaries(getMockDocs());
             } finally {
                 setLoading(false);
             }
         };
         fetchData();
-    }, []);
+    }, [language]); // Re-fetch when language changes
 
     const heroArticles = articles.slice(0, 1);
     const latestTopics = articles.slice(1, 5).length >= 4 ? articles.slice(1, 5) : articles.slice(0, 4);
@@ -194,7 +148,7 @@ export default function Home() {
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
                     <div style={{ textAlign: 'center' }}>
                         <div style={{ fontSize: '48px', marginBottom: '20px' }}>✈️</div>
-                        <p style={{ fontSize: '18px', color: '#666' }}>جاري تحميل المحتوى...</p>
+                        <p style={{ fontSize: '18px', color: '#666' }}>{t('loading.content')}</p>
                     </div>
                 </div>
             </main>
@@ -206,7 +160,7 @@ export default function Home() {
             <div className={styles.heroSection}><Hero articles={heroArticles} /></div>
             <section className={styles.parallaxSection}>
                 <div className="container">
-                    <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>أحدث المواضيع</h2></div>
+                    <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>{t('section.latestTopics')}</h2></div>
                     <div className={styles.parallaxGrid}>
                         {latestTopics.map((article: any) => (<div key={article.id} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
                     </div>
@@ -214,7 +168,7 @@ export default function Home() {
             </section>
             <section className={styles.parallaxSection}>
                 <div className="container">
-                    <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>الأكثر مشاهدة</h2></div>
+                    <div className={styles.sectionHeader}><h2 className={styles.sectionTitle}>{t('section.mostViewed')}</h2></div>
                     <div className={styles.parallaxGrid}>
                         {mostViewed.map((article: any) => (<div key={article.id + '-viewed'} className={styles.parallaxCardWrapper}><ParallaxArticleCard {...article} /></div>))}
                     </div>
@@ -223,7 +177,7 @@ export default function Home() {
             <GallerySection />
             <section id="programs" className={styles.seriesSection}>
                 <div className="container">
-                    <div className={styles.seriesHeader}><h2 className={styles.seriesTitle}>البرامج</h2></div>
+                    <div className={styles.seriesHeader}><h2 className={styles.seriesTitle}>{t('section.programs')}</h2></div>
                     <div className={styles.seriesGrid}>
                         {programs.map((item: any) => (
                             <Link href={item.link} key={item.id} className={styles.seriesCard}>
@@ -237,7 +191,7 @@ export default function Home() {
             </section>
             <section id="documentaries" className={styles.seriesSection}>
                 <div className="container">
-                    <div className={styles.seriesHeader}><h2 className={styles.seriesTitle}>الوثائقيات</h2></div>
+                    <div className={styles.seriesHeader}><h2 className={styles.seriesTitle}>{t('section.documentaries')}</h2></div>
                     <div className={styles.seriesGrid}>
                         {documentaries.map((item: any) => (
                             <Link href={item.link} key={item.id} className={styles.seriesCard}>
