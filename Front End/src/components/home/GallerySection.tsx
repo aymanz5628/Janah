@@ -8,16 +8,15 @@ import { ArrowUpRight } from 'lucide-react';
 import { fetchAPI, getStrapiMedia } from '@/lib/strapi';
 import styles from './GallerySection.module.css';
 
-// Aviation/travel themed placeholder images
 const PLACEHOLDER_IMAGES = [
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600", // airplane in clouds
-    "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600", // airplane wing sunset
-    "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=600", // travel destination
-    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=600", // airport terminal
-    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600", // mountains travel
-    "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600", // road trip
-    "https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=600", // pilot cockpit
-    "https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600", // airplane view
+    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600",
+    "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600",
+    "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=600",
+    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=600",
+    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600",
+    "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600",
+    "https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=600",
+    "https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600",
 ];
 
 export default function GallerySection() {
@@ -28,7 +27,6 @@ export default function GallerySection() {
         async function loadGallery() {
             try {
                 const res = await fetchAPI('/gallery-images', { populate: '*' });
-
                 let data = [];
                 if (Array.isArray(res)) {
                     data = res;
@@ -44,7 +42,6 @@ export default function GallerySection() {
                         return getStrapiMedia(url);
                     }).filter((url: string | null) => url !== null) as string[];
 
-                    // If we have images, repeat them if needed to fill the grid, or show what we have
                     if (strapiImages.length > 0) {
                         let displayImages = [...strapiImages];
                         while (displayImages.length < 8) {
@@ -52,16 +49,13 @@ export default function GallerySection() {
                         }
                         setImages(displayImages.slice(0, 8));
                     } else {
-                        // Use placeholder images
                         setImages(PLACEHOLDER_IMAGES);
                     }
                 } else {
-                    // Use placeholder images when no data from backend
                     setImages(PLACEHOLDER_IMAGES);
                 }
             } catch (e) {
                 console.error("Gallery fetch failed", e);
-                // Use placeholder images on error
                 setImages(PLACEHOLDER_IMAGES);
             } finally {
                 setLoading(false);
@@ -83,31 +77,24 @@ export default function GallerySection() {
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.8 }}
                 >
-                    {/* Row 1 */}
                     <MosaicItem src={images[0]} index={0} />
                     <MosaicItem src={images[1]} index={1} />
                     <MosaicItem src={images[2]} index={2} />
-
-                    {/* Row 2 */}
                     <MosaicItem src={images[3]} index={3} />
 
-                    {/* Center Button */}
                     <div className={styles.centerItem}>
                         <Link href="/gallery" className={styles.galleryButton}>
                             <div className={styles.iconWrapper}>
                                 <ArrowUpRight size={32} />
                             </div>
-                            <span className={styles.buttonText}>المعرض</span>
+                            <span className={styles.buttonText}>Gallery</span>
                         </Link>
                     </div>
 
                     <MosaicItem src={images[4]} index={4} />
-
-                    {/* Row 3 */}
                     <MosaicItem src={images[5]} index={5} />
                     <MosaicItem src={images[6]} index={6} />
                     <MosaicItem src={images[7]} index={7} />
-
                 </motion.div>
             </div>
         </section>
@@ -121,7 +108,7 @@ function MosaicItem({ src, index }: { src: string, index: number }) {
         <div className={styles.item}>
             <Image
                 src={src}
-                alt={`صورة من معرض جناح ${index + 1}`}
+                alt={`Janah Gallery Image ${index + 1}`}
                 fill
                 className={styles.image}
                 sizes="(max-width: 768px) 50vw, 33vw"

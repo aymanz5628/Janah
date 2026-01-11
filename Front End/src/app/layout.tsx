@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
-  variable: "--font-ibm-plex-sans-arabic",
-  subsets: ["arabic"],
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "جناح - منصة الطيران والسفر",
-  description: "منصة جناح للمحتوى المتخصص في الطيران والسفر",
+  title: "Janah - Aviation & Travel Platform",
+  description: "Janah is your premier destination for aviation and travel content",
 };
 
 export default function RootLayout({
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body className={`${ibmPlexSansArabic.variable}`}>
+    <html lang="en" dir="ltr">
+      <body className={`${inter.variable}`}>
         <Header />
         <main style={{ minHeight: 'calc(100vh - 200px)' }}>
           {children}
