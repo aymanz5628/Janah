@@ -27,15 +27,17 @@
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
     text-align: center;
 }
 
-.sectionTitle::before {
+/* Blue lines on both sides of section titles */
+.sectionTitle::before,
+.sectionTitle::after {
     content: '';
-    width: 4px;
-    height: 28px;
-    background: linear-gradient(to bottom, var(--sky-blue), var(--ocean));
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sky-blue), var(--ocean));
     border-radius: 2px;
 }
 
@@ -90,16 +92,18 @@
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
     text-align: center;
 }
 
-.seriesTitle::before {
+/* Blue lines on both sides of series titles */
+.seriesTitle::before,
+.seriesTitle::after {
     content: '';
-    width: 5px;
-    height: 32px;
-    background: linear-gradient(to bottom, var(--sky-blue), var(--ocean));
-    border-radius: 4px;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sky-blue), var(--ocean));
+    border-radius: 2px;
 }
 
 /* Force 4 Columns on Desktop, 2 Columns on Mobile */
@@ -223,5 +227,12 @@
     .sectionTitle,
     .seriesTitle {
         font-size: var(--text-xl);
+    }
+    
+    .sectionTitle::before,
+    .sectionTitle::after,
+    .seriesTitle::before,
+    .seriesTitle::after {
+        width: 30px;
     }
 }
