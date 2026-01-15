@@ -4,6 +4,9 @@ export const translations = {
     "nav.home": "الرئيسية",
     "nav.aviation": "الطيران",
     "nav.travel": "السفر",
+    "nav.topics": "المواضيع",
+    "nav.programs": "البرامج",
+    "nav.documentaries": "الوثائقيات",
     "nav.gallery": "المعرض",
     "nav.search": "ابحث...",
     
@@ -67,6 +70,9 @@ export const translations = {
     "nav.home": "Home",
     "nav.aviation": "Aviation",
     "nav.travel": "Travel",
+    "nav.topics": "Topics",
+    "nav.programs": "Programs",
+    "nav.documentaries": "Documentaries",
     "nav.gallery": "Gallery",
     "nav.search": "Search...",
     

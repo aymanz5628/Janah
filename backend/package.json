@@ -15,7 +15,6 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@sklinet/strapi-plugin-tinymce": "^1.1.7",
     "@strapi/plugin-cloud": "^5.33.1",
     "@strapi/plugin-users-permissions": "^5.33.1",
     "@strapi/strapi": "^5.33.1",

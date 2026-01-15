@@ -1,59 +1,18 @@
 {
     "kind": "collectionType",
     "collectionName": "programs",
-    "info": {
-        "singularName": "program",
-        "pluralName": "programs",
-        "displayName": "Program",
-        "description": "Video programs and series"
-    },
-    "options": {
-        "draftAndPublish": true
-    },
-    "pluginOptions": {},
+    "info": { "singularName": "program", "pluralName": "programs", "displayName": "Program" },
+    "options": { "draftAndPublish": true },
     "attributes": {
-        "title": {
-            "type": "string",
-            "required": true
-        },
-        "description": {
-            "type": "text",
-            "required": true
-        },
-        "content": {
-            "type": "customField",
-            "customField": "plugin::tinymce.tinymce"
-        },
-        "slug": {
-            "type": "uid",
-            "targetField": "title",
-            "required": true
-        },
-        "image": {
-            "type": "media",
-            "multiple": false,
-            "required": false,
-            "allowedTypes": [
-                "images",
-                "files",
-                "videos",
-                "audios"
-            ]
-        },
-        "videoUrl": {
-             "type": "string"
-        },
-        "seoTitle": {
-            "type": "string"
-        },
-        "seoDescription": {
-            "type": "text"
-        },
-        "keywords": {
-            "type": "text"
-        },
-        "canonicalUrl": {
-            "type": "string"
-        }
+        "title": { "type": "string", "required": true },
+        "description": { "type": "text", "required": true },
+        "content": { "type": "richtext" },
+        "slug": { "type": "uid", "targetField": "title", "required": true },
+        "image": { "type": "media", "multiple": false, "allowedTypes": ["images", "files", "videos", "audios"] },
+        "videoUrl": { "type": "string" },
+        "seoTitle": { "type": "string" },
+        "seoDescription": { "type": "text" },
+        "keywords": { "type": "text" },
+        "canonicalUrl": { "type": "string" }
     }
 }

@@ -1,8 +1,9 @@
-/* Premium Footer */
+/* Premium Footer - Thmanyah/Weqaya Style */
 .footer {
-    background: var(--charcoal);
-    color: var(--snow);
-    padding: var(--space-7) 0;
+    background-color: #003D5C; /* Deep Ocean Blue */
+    padding: 64px 0 32px;
+    margin-top: 64px;
+    color: white;
     text-align: center;
 }
 
@@ -13,41 +14,75 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--space-6);
 }
 
-.copy {
-    font-size: var(--text-lg);
-    /* INCREASED SIZE */
-    font-weight: 600;
-    /* Added weight for better visibility */
-    color: var(--snow);
-    /* CHANGED to White */
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.02em;
+}
+
+.tagline {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    max-width: 400px;
 }
 
 .links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-5);
+    gap: 32px;
+    margin: var(--space-6) 0;
 }
 
 .link {
-    font-size: var(--text-sm);
+    color: white;
+    font-size: 15px;
     font-weight: 500;
-    color: var(--snow);
-    /* CHANGED to White */
-    opacity: 0.8;
-    transition: opacity var(--duration-fast) var(--ease-out);
+    transition: color 0.2s ease;
+    opacity: 0.9;
 }
 
 .link:hover {
+    color: #FB923C; /* Warm Orange */
     opacity: 1;
-    color: var(--sky-blue);
+}
+
+.copy {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .footer {
+    background-color: #001a2c; /* Even deeper blue for dark mode */
 }
 
 @media (max-width: 640px) {
+    .footer {
+        padding: 48px 0 24px;
+    }
+    
     .links {
-        gap: var(--space-4);
+        gap: 20px;
+    }
+    
+    .logo {
+        font-size: 2rem;
     }
 }

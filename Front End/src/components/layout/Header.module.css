@@ -281,3 +281,65 @@
         font-size: 13px;
     }
 }
+
+/* Theme Toggle Button */
+.themeToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.themeToggle:hover {
+    color: var(--gold);
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--gold);
+}
+
+.mobileThemeToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: var(--space-3);
+    transition: all 0.2s ease;
+}
+
+.mobileThemeToggle:hover {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--gold);
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .header {
+    background: rgba(13, 13, 13, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .mobileMenu {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .searchForm {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .searchForm:focus-within {
+    background: var(--surface);
+}

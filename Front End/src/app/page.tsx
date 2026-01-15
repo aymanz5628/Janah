@@ -97,7 +97,7 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const articlesRes = await fetch(`${STRAPI_URL}/api/articles?populate=*&sort=publishedAt:desc&pagination[limit]=20`);
+                const articlesRes = await fetch(`${STRAPI_URL}/api/articles?populate=*&sort=publishedAt:desc&pagination[limit]=20&locale=${language}`);
                 if (articlesRes.ok) {
                     const data = await articlesRes.json();
                     const rawArticles = data.data || [];

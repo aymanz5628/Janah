@@ -1,16 +1,18 @@
 "use client";
 
 import Link from 'next/link';
-import { Search, Menu, X, Globe } from 'lucide-react';
+import { Search, Menu, X, Globe, Moon, Sun } from 'lucide-react';
 import styles from './Header.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function Header() {
     const router = useRouter();
     const pathname = usePathname();
     const { language, setLanguage, t } = useLanguage();
+    const { theme, toggleTheme } = useTheme();
     const [query, setQuery] = useState('');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -48,8 +50,9 @@ export default function Header() {
 
     const navLinks = [
         { href: '/', label: t('nav.home'), exact: true },
-        { href: '/category/aviation', label: t('nav.aviation') },
-        { href: '/category/travel', label: t('nav.travel') },
+        { href: '/category/topics', label: t('nav.topics') },
+        { href: '/#programs', label: t('nav.programs') },
+        { href: '/#documentaries', label: t('nav.documentaries') },
         { href: '/gallery', label: t('nav.gallery') },
     ];
 
@@ -102,6 +105,14 @@ export default function Header() {
                     </form>
                     
                     <button 
+                        onClick={toggleTheme}
+                        className={styles.themeToggle}
+                        aria-label="Toggle theme"
+                    >
+                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    </button>
+                    
+                    <button 
                         onClick={toggleLanguage}
                         className={styles.langToggle}
                         aria-label="Toggle language"
@@ -135,6 +146,13 @@ export default function Header() {
                         ))}
                     </nav>
                     <div className={styles.mobileActions}>
+                        <button 
+                            onClick={toggleTheme}
+                            className={styles.mobileThemeToggle}
+                        >
+                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                            <span>{theme === 'dark' ? (language === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (language === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}</span>
+                        </button>
                         <button 
                             onClick={toggleLanguage}
                             className={styles.mobileLangToggle}
