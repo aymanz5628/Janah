@@ -1,0 +1,120 @@
+/* ===== IMMERSIVE ARTICLE MODE ===== */
+
+.immersive-mode {
+    background: #0a0a0a !important;
+}
+
+.immersive-mode header {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    animation: headerSlideUp 1.5s ease-in-out 5s forwards;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.immersive-mode header * {
+    color: #1A1A1A !important;
+    stroke: #1A1A1A !important;
+}
+
+.immersive-mode header input {
+    color: #1A1A1A !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.immersive-mode header input::placeholder {
+    color: #666666 !important;
+}
+
+.immersive-mode footer {
+    display: none !important;
+}
+
+.immersive-mode main,
+.immersive-mode .body {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    min-height: 100vh;
+}
+
+.immersive-mode .rawHtmlContent .presentation {
+    height: 100vh !important;
+    overflow-y: scroll !important;
+    scroll-snap-type: y mandatory !important;
+    scroll-behavior: smooth !important;
+}
+
+.immersive-mode .rawHtmlContent .slide {
+    min-height: 100vh !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+}
+
+.immersive-mode body {
+    overflow: hidden !important;
+}
+
+/* Elegant Arrow Back Button */
+.immersive-back-button {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    z-index: 99999;
+    background: linear-gradient(135deg, rgba(93, 173, 226, 0.95), rgba(72, 202, 228, 0.95));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    text-decoration: none !important;
+    animation: showBackButton 0.6s ease-out 0.5s forwards;
+    box-shadow: 0 8px 32px rgba(93, 173, 226, 0.5);
+}
+
+/* Clean Arrow Icon */
+.immersive-back-button::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-left: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    transform: rotate(45deg);
+    margin-right: -4px;
+    transition: all 0.3s ease;
+}
+
+.immersive-back-button:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 45px rgba(93, 173, 226, 0.7);
+    background: linear-gradient(135deg, #5DADE2, #48CAE4);
+}
+
+.immersive-back-button:active {
+    transform: scale(0.95);
+}
+
+@keyframes showBackButton {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.5);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+@keyframes headerSlideUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-100%); pointer-events: none; visibility: hidden; }
+}

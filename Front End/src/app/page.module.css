@@ -4,21 +4,19 @@
     min-height: 100vh;
 }
 
-/* Hero */
 .heroSection {
-    margin-bottom: var(--space-9);
+    margin-bottom: var(--space-6);
 }
 
-/* Feed Section */
 .mosaicSection {
-    padding: var(--space-8) 0;
+    padding: var(--space-6) 0;
 }
 
 .sectionHeader {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-6);
 }
 
 .sectionTitle {
@@ -31,7 +29,6 @@
     text-align: center;
 }
 
-/* Blue lines on both sides of section titles */
 .sectionTitle::before,
 .sectionTitle::after {
     content: '';
@@ -41,42 +38,27 @@
     border-radius: 2px;
 }
 
-/* Premium Grid */
 .grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: var(--space-5);
 }
 
-/* Span Classes */
-.span4 {
-    grid-column: span 4;
-}
+.span4 { grid-column: span 4; }
+.span6 { grid-column: span 6; }
+.span8 { grid-column: span 8; }
+.span12 { grid-column: span 12; }
 
-.span6 {
-    grid-column: span 6;
-}
-
-.span8 {
-    grid-column: span 8;
-}
-
-.span12 {
-    grid-column: span 12;
-}
-
-/* Featured Card Styling Enhancement */
-.span8>div,
-.span6>div {
+.span8>div, .span6>div {
     min-height: 380px;
 }
 
-/* Series & Documentaries Sections */
+/* Series Sections */
 .seriesSection {
-    padding: var(--space-8) 0;
+    padding: var(--space-6) 0;
     position: relative;
     overflow: hidden;
-    margin-top: var(--space-8);
+    margin-top: var(--space-6);
 }
 
 .seriesHeader {
@@ -96,7 +78,6 @@
     text-align: center;
 }
 
-/* Blue lines on both sides of series titles */
 .seriesTitle::before,
 .seriesTitle::after {
     content: '';
@@ -106,7 +87,6 @@
     border-radius: 2px;
 }
 
-/* Force 4 Columns on Desktop, 2 Columns on Mobile */
 .seriesGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr) !important;
@@ -119,33 +99,38 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
     cursor: pointer;
-    box-shadow: var(--shadow-medium);
-    transition: transform 400ms ease, box-shadow 400ms ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     background: #000;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .seriesCard:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-strong);
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
     z-index: 10;
+}
+
+@media (hover: none) {
+    .seriesCard:active {
+        transform: scale(0.97);
+    }
 }
 
 .seriesImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 700ms ease;
+    transition: transform 0.5s ease;
 }
 
 .seriesCard:hover .seriesImage {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .seriesOverlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-    opacity: 0.8;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
 }
 
 .seriesContent {
@@ -172,13 +157,13 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate(-50%, -50%) scale(0);
     opacity: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 400ms ease;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.35s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .seriesCard:hover .playIcon {
@@ -186,37 +171,45 @@
     opacity: 1;
 }
 
-/* Parallax Cards Section - 2x2 Grid */
+/* Parallax Section */
 .parallaxSection {
-    padding: var(--space-9) 0;
+    padding: var(--space-6) 0;
     background: var(--snow);
-    margin: var(--space-8) 0;
+    margin: var(--space-4) 0;
 }
 
 .parallaxGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .parallaxCardWrapper {
     width: 100%;
-    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.parallaxCardWrapper:hover {
-    transform: translateY(-8px);
-    z-index: 10;
-}
-
-/* Responsive Adjustments */
+/* Responsive */
 @media (max-width: 768px) {
+    .heroSection {
+        margin-bottom: var(--space-4);
+    }
+    
+    .seriesSection {
+        padding: var(--space-5) 0;
+        margin-top: var(--space-5);
+    }
+    
     .seriesGrid {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: var(--space-4);
+        gap: var(--space-3);
+    }
+    
+    .parallaxSection {
+        padding: var(--space-5) 0;
+        margin: var(--space-3) 0;
     }
     
     .parallaxGrid {
@@ -234,5 +227,10 @@
     .seriesTitle::before,
     .seriesTitle::after {
         width: 30px;
+    }
+    
+    .sectionHeader,
+    .seriesHeader {
+        margin-bottom: var(--space-4);
     }
 }

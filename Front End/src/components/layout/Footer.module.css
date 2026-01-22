@@ -1,10 +1,23 @@
-/* Premium Footer - Thmanyah/Weqaya Style */
+/* Premium Footer */
 .footer {
-    background-color: #003D5C; /* Deep Ocean Blue */
-    padding: 64px 0 32px;
-    margin-top: 64px;
+    background: linear-gradient(135deg, #001a2c 0%, #003D5C 50%, #00506B 100%);
+    padding: 60px 0 30px;
+    margin-top: 60px;
     color: white;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle gradient overlay */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(93, 173, 226, 0.5), transparent);
 }
 
 .container {
@@ -14,75 +27,176 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-6);
+    gap: 28px;
+    position: relative;
+    z-index: 1;
 }
 
 .brand {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-3);
+    gap: 12px;
 }
 
 .logo {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: white;
-    letter-spacing: -0.02em;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+    text-shadow: 0 2px 20px rgba(93, 173, 226, 0.5);
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    text-shadow: 0 4px 30px rgba(93, 173, 226, 0.8);
+    transform: scale(1.03);
 }
 
 .tagline {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    color: rgba(200, 230, 255, 0.8);
     font-weight: 400;
-    max-width: 400px;
+    max-width: 350px;
+    line-height: 1.6;
 }
 
+/* Social Media Icons */
+.socialLinks {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+}
+
+.socialIcon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.socialIcon:hover {
+    background: linear-gradient(135deg, rgba(93, 173, 226, 0.3), rgba(72, 202, 228, 0.3));
+    color: #5DADE2;
+    transform: translateY(-5px) scale(1.1);
+    border-color: rgba(93, 173, 226, 0.4);
+    box-shadow: 0 10px 25px rgba(93, 173, 226, 0.3);
+}
+
+.socialIcon svg {
+    transition: transform 0.3s ease;
+}
+
+.socialIcon:hover svg {
+    transform: scale(1.15);
+}
+
+/* Navigation Links */
 .links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 32px;
-    margin: var(--space-6) 0;
+    gap: 28px;
 }
 
 .link {
-    color: white;
-    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
     font-weight: 500;
-    transition: color 0.2s ease;
-    opacity: 0.9;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #5DADE2, #48CAE4);
+    transition: width 0.3s ease;
+    border-radius: 1px;
 }
 
 .link:hover {
-    color: #FB923C; /* Warm Orange */
-    opacity: 1;
+    color: #5DADE2;
 }
 
-.copy {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    margin-top: var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+.link:hover::after {
     width: 100%;
 }
 
-/* Dark Mode Adjustments */
-[data-theme="dark"] .footer {
-    background-color: #001a2c; /* Even deeper blue for dark mode */
+/* Copyright */
+.copy {
+    color: rgba(220, 240, 255, 0.9);
+    font-size: 13px;
+    margin-top: 10px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
 }
 
+/* Dark Mode */
+[data-theme="dark"] .footer {
+    background: linear-gradient(135deg, #000d14 0%, #001a2c 50%, #002a3d 100%);
+}
+
+/* Mobile */
 @media (max-width: 640px) {
     .footer {
-        padding: 48px 0 24px;
+        padding: 45px 0 25px;
+        margin-top: 40px;
     }
     
-    .links {
-        gap: 20px;
+    .container {
+        gap: 22px;
     }
     
     .logo {
-        font-size: 2rem;
+        font-size: 28px;
     }
+    
+    .tagline {
+        font-size: 13px;
+    }
+    
+    .socialIcon {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .links {
+        gap: 18px;
+    }
+    
+    .link {
+        font-size: 13px;
+    }
+}
+
+/* ===== ENHANCED DARK MODE ===== */
+[data-theme="dark"] .footerLink {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .footerLink:hover {
+    color: var(--sky-light);
+}
+
+[data-theme="dark"] .sectionTitle {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .copyright {
+    color: var(--text-tertiary);
 }

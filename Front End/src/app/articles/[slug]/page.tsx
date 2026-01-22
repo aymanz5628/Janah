@@ -1,6 +1,7 @@
 'use client';
+import Link from 'next/link';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useParams } from 'next/navigation';
 import ArticleHeader from '@/components/article/ArticleHeader';
 import ArticleBody from '@/components/article/ArticleBody';
@@ -147,13 +148,13 @@ export default function ArticlePage() {
 
             // Try fetching from Strapi
             try {
-                let url = `${STRAPI_URL}/api/articles?filters[slug]=${slug}&populate=*`;
+                let url = `${STRAPI_URL}/api/articles?filters[slug]=${slug}&populate=*&locale=${language}`;
                 const isIdFallback = slug.startsWith('article-');
                 
                 if (isIdFallback) {
                     const idPart = slug.split('article-')[1];
                     if (!isNaN(Number(idPart))) {
-                         url = `${STRAPI_URL}/api/articles/${idPart}?populate=*`;
+                         url = `${STRAPI_URL}/api/articles/${idPart}?populate=*&locale=${language}`;
                     }
                 }
 
@@ -177,6 +178,8 @@ export default function ArticlePage() {
                             title: attr.title || (language === 'ar' ? 'بدون عنوان' : 'Untitled'),
                             description: attr.description || '',
                             content: attr.content || '',
+                            rawHtml: attr.rawHtml || '',
+                            useRawHtml: attr.useRawHtml || false,
                             publishedAt: attr.publishedAt,
                             image: getStrapiMedia(getImageUrl(attr.image)),
                             author: attr.author?.data?.attributes || attr.author || {},
@@ -198,6 +201,17 @@ export default function ArticlePage() {
 
         fetchArticle();
     }, [slug, language]);
+
+    // Add immersive mode class for raw HTML articles
+    useEffect(() => {
+        if (article?.useRawHtml) {
+            document.documentElement.classList.add('immersive-mode');
+            return () => {
+                document.documentElement.classList.remove('immersive-mode');
+            };
+        }
+    }, [article?.useRawHtml]);
+
 
     if (loading) {
         return (
@@ -232,8 +246,8 @@ export default function ArticlePage() {
     const dateLocale = language === 'ar' ? 'ar-SA' : 'en-US';
 
     return (
-        <article className="min-h-screen bg-white pb-20">
-            <ArticleHeader 
+        <article className={article.useRawHtml ? "min-h-screen bg-[#0a0a0a] immersive-article" : "min-h-screen bg-white pb-20"}>
+            {!article.useRawHtml && <ArticleHeader 
                 title={article.title}
                 excerpt={article.description}
                 category={article.category?.name || (language === 'ar' ? 'عام' : 'General')}
@@ -242,11 +256,19 @@ export default function ArticlePage() {
                     avatar: avatarUrl || 'https://ui-avatars.com/api/?name=J'
                 }}
                 date={article.publishedAt ? new Date(article.publishedAt).toLocaleDateString(dateLocale, { year: 'numeric', month: 'long', day: 'numeric' }) : ''}
-            />
-            <ArticleBody 
+            />}
+            <ArticleBody
                 content={article.content}
+                rawHtml={article.rawHtml}
+                useRawHtml={article.useRawHtml}
+                articleTitle={article.title}
                 image={article.image || undefined}
             />
+            {article.useRawHtml && (
+                <Link href="/" className="immersive-back-button">
+                    
+                </Link>
+            )}
         </article>
     );
 }

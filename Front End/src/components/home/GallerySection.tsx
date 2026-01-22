@@ -10,14 +10,16 @@ import styles from './GallerySection.module.css';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const PLACEHOLDER_IMAGES = [
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=600",
-    "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?q=80&w=600",
-    "https://images.unsplash.com/photo-1488085061387-422e29b40080?q=80&w=600",
-    "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=600",
-    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600",
-    "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=600",
-    "https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=600",
-    "https://images.unsplash.com/photo-1559628233-100c798642d4?q=80&w=600",
+    // الصف العلوي: تاريخ الطيران المبكر + العصر الذهبي
+    "https://res.cloudinary.com/janah/image/upload/v1768850063/The_Wright_Flyer_s_First_Flight_1903_fjg5x2.avif",
+    "https://res.cloudinary.com/janah/image/upload/v1768850063/The_Golden_Age_of_Air_Travel_1950s_czsaba.jpg",
+    "https://res.cloudinary.com/janah/image/upload/v1768850063/13._The_Sound_Barrier_is_Broken_1947_cvnfef.webp",
+    "https://res.cloudinary.com/janah/image/upload/v1768850062/The_Concorde_Supersonic_Transport_1969_muihmp.jpg",
+    // الصف السفلي: الأحداث التاريخية + المعمار
+    "https://res.cloudinary.com/janah/image/upload/v1768850063/The_Apollo_11_Launch_1969_q1lezn.jpg",
+    "https://res.cloudinary.com/janah/image/upload/v1768850064/The_TWA_Flight_Center_JFK_Airport_hir8ib.jpg",
+    "https://res.cloudinary.com/janah/image/upload/v1768850063/The_22Miracle_on_the_Hudson_22_orrlqo.jpg",
+    "https://res.cloudinary.com/janah/image/upload/v1768850062/The_Fall_of_the_Berlin_Wall_and_Tempelhof_Airport_quosa6.avif",
 ];
 
 export default function GallerySection() {

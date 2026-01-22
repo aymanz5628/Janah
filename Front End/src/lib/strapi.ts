@@ -1,7 +1,7 @@
 import qs from 'qs';
 
 export function getStrapiURL(path = '') {
-  return `https://active-success-312253e677.strapiapp.com${path}`;
+  return `http://localhost:1337${path || ""}`;
 }
 
 export async function fetchAPI(
@@ -16,7 +16,7 @@ export async function fetchAPI(
   };
 
   const queryString = qs.stringify(urlParamsObject, { encodeValuesOnly: true });
-  const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ''}`)}`;
+  const requestUrl = `${getStrapiURL(`/api${path || ""}${queryString ? `?${queryString}` : ''}`)}`;
 
   try {
     console.log(`[Strapi] Fetching fresh: ${requestUrl}`);

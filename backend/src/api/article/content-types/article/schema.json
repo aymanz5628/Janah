@@ -5,7 +5,7 @@
     "singularName": "article",
     "pluralName": "articles",
     "displayName": "Article",
-    "description": "Blog articles"
+    "description": "Blog articles with rich HTML support"
   },
   "options": {
     "draftAndPublish": true
@@ -24,6 +24,14 @@
     "seoTitle": { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
     "seoDescription": { "type": "text", "pluginOptions": { "i18n": { "localized": true } } },
     "keywords": { "type": "text", "pluginOptions": { "i18n": { "localized": true } } },
-    "canonicalUrl": { "type": "string", "pluginOptions": { "i18n": { "localized": true } } }
+    "canonicalUrl": { "type": "string", "pluginOptions": { "i18n": { "localized": true } } },
+    "rawHtml": { 
+      "type": "text", 
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "useRawHtml": {
+      "type": "boolean",
+      "default": false
+    }
   }
 }

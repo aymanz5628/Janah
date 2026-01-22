@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -13,42 +13,46 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'light';
+  const saved = localStorage.getItem('janah-theme') as Theme;
+  if (saved && (saved === 'light' || saved === 'dark')) return saved;
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
+  // Initialize theme on mount
   useEffect(() => {
-    // Load saved theme preference or detect system preference
-    const saved = localStorage.getItem('janah-theme') as Theme;
-    if (saved && (saved === 'light' || saved === 'dark')) {
-      setThemeState(saved);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setThemeState('dark');
-    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    const initialTheme = getInitialTheme();
+    setThemeState(initialTheme);
+    document.documentElement.setAttribute('data-theme', initialTheme);
     setMounted(true);
   }, []);
 
+  // Sync theme changes to DOM and localStorage
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (mounted) {
-      // Update document attribute
       document.documentElement.setAttribute('data-theme', theme);
-      
-      // Save preference
       localStorage.setItem('janah-theme', theme);
     }
   }, [theme, mounted]);
 
-  const setTheme = (newTheme: Theme) => {
+  const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
-  };
+  }, []);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setThemeState(prev => prev === 'light' ? 'dark' : 'light');
-  };
+  }, []);
 
   const isDark = theme === 'dark';
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <ThemeContext.Provider value={{ theme: 'light', setTheme, toggleTheme, isDark: false }}>

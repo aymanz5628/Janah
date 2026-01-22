@@ -1,93 +1,145 @@
-/* Search Page Styles */
-
 .main {
-  min-height: 80vh;
-  padding: 48px 24px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-6);
+    min-height: calc(100vh - var(--header-height) - 200px);
 }
 
 .header {
-  margin-bottom: 48px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
 }
 
 .backLink {
-  padding: 12px;
-  border-radius: 50%;
-  background-color: var(--light-gray);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
 }
 
 .backLink:hover {
-  background-color: var(--soft-blue);
-  color: var(--deep-ocean-blue);
-  transform: scale(1.05);
+    background: var(--sky-blue);
+    color: white;
 }
 
 .titleWrapper {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
 }
 
 .icon {
-  color: var(--deep-ocean-blue);
+    color: var(--sky-blue);
 }
 
 .pageTitle {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--deep-ocean-blue);
-  margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .queryStats {
-  margin-bottom: 40px;
-  font-size: 18px;
-  color: var(--text-secondary);
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
 }
 
 .queryHighlight {
-  font-weight: 700;
-  color: var(--deep-ocean-blue);
+    color: var(--sky-blue);
+    font-weight: 600;
+}
+
+.resultCount {
+    color: var(--text-tertiary);
+    font-size: var(--text-base);
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
 }
 
 .noResults {
-  text-align: center;
-  padding: 64px 24px;
-  background-color: var(--light-gray);
-  border-radius: 24px;
-  margin-top: 32px;
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    color: var(--text-secondary);
+}
+
+.noResultsIcon {
+    font-size: 64px;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
 }
 
 .noResultsTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
 }
 
 .noResultsText {
-  color: var(--text-secondary);
-  opacity: 0.8;
+    font-size: var(--text-base);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-6);
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
+.suggestions {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+}
+
+.suggestions p {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-3);
+}
+
+.suggestionTags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.tag {
+    padding: 8px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.tag:hover {
+    background: var(--sky-blue);
+    color: white;
+    border-color: var(--sky-blue);
+}
+
+@media (max-width: 640px) {
+    .main {
+        padding: var(--space-4);
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .pageTitle {
+        font-size: var(--text-xl);
+    }
 }

@@ -11,7 +11,7 @@ export const translations = {
     "nav.search": "ابحث...",
     
     // Footer
-    "footer.copyright": "© 2026 جناح. جميع الحقوق محفوظة.",
+    "footer.copyright": "جميع الحقوق محفوظة لشركة جناح للنشر والتوزيع 2026 ©",
     "footer.about": "من نحن",
     "footer.advertise": "أعلن معنا",
     "footer.careers": "الوظائف",
@@ -77,7 +77,7 @@ export const translations = {
     "nav.search": "Search...",
     
     // Footer
-    "footer.copyright": "© 2026 Janah. All rights reserved.",
+    "footer.copyright": "All rights reserved for Janah Publishing & Distribution 2026 ©",
     "footer.about": "About Us",
     "footer.advertise": "Advertise",
     "footer.careers": "Careers",

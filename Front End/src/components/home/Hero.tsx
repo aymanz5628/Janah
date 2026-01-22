@@ -29,8 +29,6 @@ interface HeroProps {
 
 export default function Hero({ articles }: HeroProps) {
     const containerRef = useRef<HTMLElement>(null);
-
-    // Safe access to articles - only use the first one
     const article = articles && articles.length > 0 ? articles[0] : null;
 
     const { scrollYProgress } = useScroll({
@@ -38,12 +36,11 @@ export default function Hero({ articles }: HeroProps) {
         offset: ["start start", "end start"]
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
-    // Fix: Always render the section to satisfy useScroll ref requirement, even if loading
     if (!article) {
         return (
-            <section ref={containerRef} className={`${styles.heroSection}`}>
+            <section ref={containerRef} className={styles.heroSection}>
                 <div className={styles.heroCard} style={{ backgroundColor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '500px' }}>
                     <p style={{ color: '#888' }}>جاري تحميل المقالات المميزة...</p>
                 </div>
@@ -52,47 +49,33 @@ export default function Hero({ articles }: HeroProps) {
     }
 
     return (
-        <section ref={containerRef} className={`${styles.heroSection}`}>
-            <div className={styles.heroCard}>
-                <motion.div
-                    className={styles.imageContainer}
-                    style={{ y }}
-                >
+        <section ref={containerRef} className={styles.heroSection}>
+            <Link href={`/articles/${article.slug}`} className={styles.heroLink}>
+                <div className={styles.heroCard}>
                     <motion.div
-                        className="w-full h-full relative"
-                        key={article.image}
-                        initial={{ scale: 1.0 }}
-                        animate={{ scale: 1.10 }}
-                        transition={{
-                            duration: 20,
-                            ease: "linear",
-                            repeat: Infinity,
-                            repeatType: "reverse"
-                        }}
-                        style={{ width: '100%', height: '100%', willChange: 'transform' }}
+                        className={styles.imageContainer}
+                        style={{ y }}
                     >
                         <Image
                             src={article.image}
                             alt={article.title}
-                            fill sizes="100vw"
+                            fill
+                            sizes="100vw"
                             className={styles.heroImage}
                             priority
                         />
+                        <div className={styles.overlay}></div>
                     </motion.div>
-                    {/* Overlay gradient */}
-                    <div className={styles.overlay}></div>
-                </motion.div>
 
-                <div className={styles.content}>
-                    <Link href={`/category/${article.category.slug}`} className={styles.categoryBadge}>
-                        {article.category.name}
-                    </Link>
-                    <Link href={`/articles/${article.slug}`} className={styles.titleLink}>
+                    <div className={styles.content}>
+                        <span className={styles.categoryBadge}>
+                            {article.category.name}
+                        </span>
                         <h2 className={styles.title}>{article.title}</h2>
-                    </Link>
-                    <p className={styles.subtitle}>{article.excerpt}</p>
+                        <p className={styles.subtitle}>{article.excerpt}</p>
+                    </div>
                 </div>
-            </div>
+            </Link>
         </section>
     );
 }

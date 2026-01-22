@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Search, Menu, X, Globe, Moon, Sun } from 'lucide-react';
+import { Search, Globe, Moon, Sun } from 'lucide-react';
 import styles from './Header.module.css';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -14,28 +14,28 @@ export default function Header() {
     const { language, setLanguage, t } = useLanguage();
     const { theme, toggleTheme } = useTheme();
     const [query, setQuery] = useState('');
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [showMobileSearch, setShowMobileSearch] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        setMobileMenuOpen(false);
-    }, [pathname]);
-
-    useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [mobileMenuOpen]);
+        const checkMobile = () => setIsMobile(window.innerWidth <= 900);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (query.trim()) {
             router.push(`/search?q=${encodeURIComponent(query)}`);
-            setMobileMenuOpen(false);
+            setShowMobileSearch(false);
+            setQuery('');
+        }
+    };
+
+    const handleMobileSearchClick = () => {
+        if (isMobile) {
+            setShowMobileSearch(!showMobileSearch);
         }
     };
 
@@ -66,17 +66,18 @@ export default function Header() {
                     element.scrollIntoView({ behavior: 'smooth' });
                 }
             }
-            setMobileMenuOpen(false);
         }
     };
 
     return (
         <header className={styles.header}>
             <div className={styles.container}>
+                {/* Logo */}
                 <Link href="/" className={styles.logo}>
-                    {language === 'ar' ? 'جناح' : 'Janah'}
+                    {language === 'ar' ? 'جَــنَــاح🛫' : 'Janah🛫'}
                 </Link>
 
+                {/* Navigation */}
                 <nav className={styles.nav}>
                     {navLinks.map((link) => (
                         <Link
@@ -90,7 +91,9 @@ export default function Header() {
                     ))}
                 </nav>
 
+                {/* Actions */}
                 <div className={styles.actions}>
+                    {/* Desktop Search Form */}
                     <form onSubmit={handleSearch} className={styles.searchForm}>
                         <input
                             type="text"
@@ -103,6 +106,16 @@ export default function Header() {
                             <Search size={18} />
                         </button>
                     </form>
+                    
+                    {/* Mobile Search Button */}
+                    <button 
+                        type="button"
+                        onClick={handleMobileSearchClick}
+                        className={styles.mobileSearchBtn}
+                        aria-label="Search"
+                    >
+                        <Search size={18} />
+                    </button>
                     
                     <button 
                         onClick={toggleTheme}
@@ -121,56 +134,29 @@ export default function Header() {
                         <span>{language === 'ar' ? 'EN' : 'AR'}</span>
                     </button>
                 </div>
-
-                <button
-                    className={styles.mobileMenuButton}
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    aria-label="Toggle menu"
-                >
-                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
             </div>
-
-            {mobileMenuOpen && (
-                <div className={styles.mobileMenu}>
-                    <nav className={styles.mobileNav}>
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className={`${styles.mobileNavLink} ${(link.exact ? pathname === link.href : isActive(link.href)) ? styles.active : ''}`}
-                                onClick={(e) => handleLinkClick(e, link.href)}
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </nav>
-                    <div className={styles.mobileActions}>
-                        <button 
-                            onClick={toggleTheme}
-                            className={styles.mobileThemeToggle}
-                        >
-                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                            <span>{theme === 'dark' ? (language === 'ar' ? 'الوضع الفاتح' : 'Light Mode') : (language === 'ar' ? 'الوضع الداكن' : 'Dark Mode')}</span>
-                        </button>
-                        <button 
-                            onClick={toggleLanguage}
-                            className={styles.mobileLangToggle}
-                        >
-                            <Globe size={18} />
-                            <span>{language === 'ar' ? 'English' : 'العربية'}</span>
-                        </button>
-                    </div>
+            
+            {/* Mobile Search Overlay */}
+            {showMobileSearch && (
+                <div className={styles.mobileSearchOverlay}>
                     <form onSubmit={handleSearch} className={styles.mobileSearchForm}>
                         <input
                             type="text"
-                            placeholder={t('nav.search')}
+                            placeholder={language === 'ar' ? 'ابحث هنا...' : 'Search...'}
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             className={styles.mobileSearchInput}
+                            autoFocus
                         />
-                        <button type="submit" className={styles.mobileSearchButton}>
-                            <Search size={18} />
+                        <button type="submit" className={styles.mobileSearchSubmit}>
+                            <Search size={20} />
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => setShowMobileSearch(false)}
+                            className={styles.mobileSearchClose}
+                        >
+                            ✕
                         </button>
                     </form>
                 </div>

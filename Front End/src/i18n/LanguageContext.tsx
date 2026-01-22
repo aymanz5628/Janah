@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { translations, Language, TranslationKey } from './translations';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import { translations, Language } from './translations';
 
 interface LanguageContextType {
   language: Language;
@@ -12,47 +12,49 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function getInitialLanguage(): Language {
+  if (typeof window === 'undefined') return 'ar';
+  const saved = localStorage.getItem('janah-language') as Language;
+  if (saved && (saved === 'ar' || saved === 'en')) return saved;
+  return 'ar';
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('ar');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Load saved language preference
-    const saved = localStorage.getItem('janah-language') as Language;
-    if (saved && (saved === 'ar' || saved === 'en')) {
-      setLanguageState(saved);
-    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    const initialLang = getInitialLanguage();
+    setLanguageState(initialLang);
+    document.documentElement.lang = initialLang;
+    document.documentElement.dir = initialLang === 'ar' ? 'rtl' : 'ltr';
     setMounted(true);
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (mounted) {
-      // Update document attributes
       document.documentElement.lang = language;
       document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-      
-      // Update font
       document.body.style.fontFamily = language === 'ar' 
         ? 'var(--font-ibm-plex-sans-arabic), sans-serif'
         : 'var(--font-inter), sans-serif';
-      
-      // Save preference
       localStorage.setItem('janah-language', language);
     }
   }, [language, mounted]);
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-  };
+  }, []);
 
-  const t = (key: string): string => {
+  const t = useCallback((key: string): string => {
     const trans = translations[language] as Record<string, string>;
     return trans[key] || key;
-  };
+  }, [language]);
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <LanguageContext.Provider value={{ language: 'ar', setLanguage, t, dir: 'rtl' }}>

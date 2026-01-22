@@ -17,6 +17,7 @@ interface ParallaxArticleCardProps {
 const ParallaxArticleCard: React.FC<ParallaxArticleCardProps> = ({
     id,
     slug,
+    excerpt,
     title,
     image,
     category,
@@ -38,6 +39,7 @@ const ParallaxArticleCard: React.FC<ParallaxArticleCardProps> = ({
                 <div className={styles.content}>
                     <span className={styles.category}>{category.name}</span>
                     <h3 className={styles.title}>{title}</h3>
+                    {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
                 </div>
                 <div className={styles.overlay} />
             </Link>
