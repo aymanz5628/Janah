@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: 'inspiring-flowers-4c3281493e.strapiapp.com',
+      },
     ],
   },
 };
