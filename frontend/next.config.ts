@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
-    // Disable server-side optimization to avoid "private IP" resolution errors with 127.0.0.1
     remotePatterns: [
       {
         protocol: 'https',
@@ -28,6 +27,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'inspiring-flowers-4c3281493e.strapiapp.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
     ],
   },
